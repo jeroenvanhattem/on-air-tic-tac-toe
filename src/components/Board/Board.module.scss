@@ -1,0 +1,27 @@
+.Board {
+	background-color: #333;
+	width: 500px;
+	height: 500px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border-radius: 10px;
+}
+
+.Row {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.Cell {
+	background-color: #333;
+	width: 150px;
+	height: 150px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: 1px solid #fff;
+}
