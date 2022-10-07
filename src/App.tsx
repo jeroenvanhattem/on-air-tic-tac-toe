@@ -24,8 +24,6 @@ const App = () => {
       <div className='Container'>
         <Board />
       </div>
-      <h1 style={{ color: 'white' }}>Test state: {test}</h1>
-      <button onClick={() => dispatch({ type: 'SET_TEST', payload: 'Haha siuu' })}>Update Redux test state</button>
 
     </div>
   )

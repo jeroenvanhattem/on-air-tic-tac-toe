@@ -7,7 +7,7 @@ export const checkWin = ({
 	board: BoardType | any;
 	currentMover: string;
 }) => {
-	console.log(board);
+	console.log("Checking board: ", board);
 	const gridSize = board.length;
 	console.log("gridSize", gridSize);
 
@@ -30,7 +30,7 @@ export const checkWin = ({
 		console.log("Inverted diagonal win:", win);
 	}
 
-	return win;
+	return win ? currentMover : false;
 };
 
 const checkRow = ({

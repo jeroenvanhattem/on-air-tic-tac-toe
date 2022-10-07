@@ -1,33 +1,55 @@
 import { useEffect, useState } from "react"
+import { useSelector, useDispatch } from "react-redux"
 import { checkWin } from "../../functions/checkWin"
+import { generateBoard } from "../../functions/generateBoard"
+import { updateBoard } from "../../functions/updateBoard"
 import { BoardType } from "../../types/Board"
+import { TileIcon } from "../Tile/TileIcon"
 import styles from "./Board.module.scss"
 
 export const Board = () => {
 
   // MOVE ALL OF THIS TO REDUX 
 
-  const [testBoard, setTestBoard] = useState<any>([
-    ['o', 'x', 'x'],
-    ['o', 'x', 'o'],
-    ['x', 'o', 'x'],
-  ])
+  const dispatch = useDispatch()
 
-  const [currentMover, setCurrentMover] = useState<string>('x')
-  const [moves, setMoves] = useState<any>(0) // [index of cell, mover]
-  const [gridSize, setGridSize] = useState<number>(3)
+  // const { board } = useSelector((state: any) => state?.board)
+  const [board, setBoard] = useState<any>(null)
+  const { gridSize } = useSelector((state: any) => state?.board)
+  const { currentMover, moves } = useSelector((state: any) => state?.game)
+
+
+  const makeMove = (position: [number, number]) => {
+    const [row, col] = position
+    console.log(position)
+    if (board[row][col] === '') {
+      const move = { mover: currentMover, position }
+      dispatch({ type: 'ADD_MOVE', payload: move })
+      dispatch({ type: 'SET_CURRENT_MOVER', payload: currentMover === 'x' ? 'o' : 'x' })
+    } else {
+      console.log('Already occupied')
+    }
+  }
 
   useEffect(() => {
-    if (testBoard) {
-      const result = checkWin({ board: testBoard, currentMover })
-      console.log('Result: ', result)
-      console.log(result ? `You won as ${currentMover}` : `You lost as ${currentMover}`)
+    const newBoard = generateBoard(gridSize)
+    setBoard(newBoard)
+  }, [])
+
+  useEffect(() => {
+    // Execute the moves on the board using a command pattern.
+    console.log('Moves', moves)
+    const newBoard = updateBoard({ moves, gridSize })
+    setBoard(newBoard)
+    const win = checkWin({ board: newBoard, currentMover: currentMover === 'x' ? 'o' : 'x' })
+    if (win) {
+      dispatch({ type: 'ADD_MOVE', payload: move })
     }
-  }, [testBoard])
+  }, [moves])
 
   return (
     <div className={styles.Board}>
-      {[...Array(gridSize)].map((_, i) => {
+      {board && [...Array(gridSize)].map((_, i) => {
         return (
           <div className={styles.Row}>
             {
@@ -35,8 +57,10 @@ export const Board = () => {
                 return (
                   <div
                     className={styles.Cell}
-                    onClick={() => { console.log('Clicked cell: ', i, j) }}
+                    onClick={() => { makeMove([i, j]) }}
                   >
+                    {board[i][j] !== '' ?
+                      <TileIcon content={board[i][j]} /> : ''}
                   </div>
                 )
               })
