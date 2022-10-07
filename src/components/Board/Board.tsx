@@ -43,7 +43,7 @@ export const Board = () => {
     setBoard(newBoard)
     const win = checkWin({ board: newBoard, currentMover: currentMover === 'x' ? 'o' : 'x' })
     if (win) {
-      dispatch({ type: 'ADD_MOVE', payload: move })
+      dispatch({ type: 'SET_WINNER', payload: currentMover === 'x' ? 'o' : 'x' })
     }
   }, [moves])
 

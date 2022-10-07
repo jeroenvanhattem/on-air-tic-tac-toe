@@ -4,24 +4,24 @@ import './App.css'
 import { Board } from './components/Board'
 import { OnAirLogo } from './components/Logo/OnAirLogo'
 import { TicTacToeLogo } from './components/Logo/TicTacToeLogo'
-// import OnAir from './assets/on-air.svg'
-
+import { Menu } from './components/Menu/Menu'
 
 const App = () => {
   const dispatch = useDispatch()
-  const { test } = useSelector((state: any) => state?.main)
+  const { winner } = useSelector((state: any) => state?.game)
 
-  useEffect(() => {
-    console.log('test: ', test)
-  }, [test])
+  const style = {
+    backgroundColor: winner ? winner === 'x' ? '#fc4d3c' : '#3cebfc' : 'black'
+  }
 
   return (
-    <div className="App">
+    <div className="App" style={style}>
       <div className='Header'>
         <OnAirLogo />
         <TicTacToeLogo />
       </div>
       <div className='Container'>
+        <Menu />
         <Board />
       </div>
 

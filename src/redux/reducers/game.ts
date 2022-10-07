@@ -21,7 +21,11 @@ export const gameReducer = (state = initialState, action: any) => {
 		case t.UNDO_MOVE:
 			return {
 				...state,
-				moves: state.moves.slice(0, state.moves.length - 1),
+				moves:
+					state.moves.length > 1
+						? state.moves.slice(0, state.moves.length - 1)
+						: [],
+				currentMover: state.currentMover === "x" ? "o" : "x",
 			};
 		case t.SET_WINNER:
 			return {
