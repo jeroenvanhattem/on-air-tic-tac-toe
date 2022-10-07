@@ -4,10 +4,17 @@ const initialState = {
 	currentMover: "x",
 	moves: [],
 	winner: false,
+	cpu: false,
+	started: false,
 };
 
 export const gameReducer = (state = initialState, action: any) => {
 	switch (action.type) {
+		case t.SET_GAME_STARTED:
+			return {
+				...state,
+				started: action.payload,
+			};
 		case t.SET_CURRENT_MOVER:
 			return {
 				...state,
@@ -37,6 +44,11 @@ export const gameReducer = (state = initialState, action: any) => {
 				currentMover: "x",
 				moves: [],
 				winner: false,
+			};
+		case t.SET_CPU:
+			return {
+				...state,
+				cpu: action.payload,
 			};
 		default:
 			return { ...state };

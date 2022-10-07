@@ -4,11 +4,11 @@ import './App.css'
 import { Board } from './components/Board'
 import { OnAirLogo } from './components/Logo/OnAirLogo'
 import { TicTacToeLogo } from './components/Logo/TicTacToeLogo'
-import { Menu } from './components/Menu/Menu'
+import { StartScreen } from './components/StartScreen/StartScreen'
 
 const App = () => {
   const dispatch = useDispatch()
-  const { winner } = useSelector((state: any) => state?.game)
+  const { winner, started } = useSelector((state: any) => state?.game)
 
   const style = {
     backgroundColor: winner ? winner === 'x' ? '#fc4d3c' : '#3cebfc' : 'black'
@@ -21,8 +21,9 @@ const App = () => {
         <TicTacToeLogo />
       </div>
       <div className='Container'>
-        <Menu />
-        <Board />
+        {started
+          ? <Board />
+          : <StartScreen />}
       </div>
 
     </div>

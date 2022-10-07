@@ -5,8 +5,11 @@ export const UndoButton = () => {
   const dispatch = useDispatch()
   return (
     <button
-      className={styles.Undo}
-      onClick={() => { dispatch({ type: 'UNDO_MOVE' }) }}
+      className={styles.UndoButton}
+      onClick={() => {
+        dispatch({ type: 'CLEAR_GAME' })
+        dispatch({ type: 'SET_GAME_STARTED', payload: false })
+      }}
     >
       Undo
     </button>

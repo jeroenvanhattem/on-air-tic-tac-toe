@@ -1,5 +1,6 @@
 import { ResetButton } from "./ResetButton"
 import { UndoButton } from "./UndoButton"
+import { ExitButton } from "./ExitButton"
 
 import styles from './Menu.module.scss'
 
@@ -8,6 +9,7 @@ export const Menu = () => {
     <div className={styles.Menu}>
       <ResetButton />
       <UndoButton />
+      <ExitButton />
     </div>
   )
 }

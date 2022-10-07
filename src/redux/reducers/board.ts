@@ -1,7 +1,6 @@
 import * as t from "../types";
 
 const initialState = {
-	board: [],
 	gridSize: 3,
 };
 
