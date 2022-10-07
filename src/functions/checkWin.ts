@@ -7,28 +7,13 @@ export const checkWin = ({
 	board: BoardType | any;
 	currentMover: string;
 }) => {
-	console.log("Checking board: ", board);
 	const gridSize = board.length;
-	console.log("gridSize", gridSize);
 
 	let win = false;
 	win = checkRow({ board, currentMover });
-	console.log("Row win:", win);
-
-	if (!win) {
-		win = checkColumn({ board, currentMover });
-		console.log("Column win:", win);
-	}
-
-	if (!win) {
-		win = checkDiagonal({ board, currentMover });
-		console.log("Diagonal win:", win);
-	}
-
-	if (!win) {
-		win = checkInvertedDiagonal({ board, currentMover });
-		console.log("Inverted diagonal win:", win);
-	}
+	if (!win) win = checkColumn({ board, currentMover });
+	if (!win) win = checkDiagonal({ board, currentMover });
+	if (!win) win = checkInvertedDiagonal({ board, currentMover });
 
 	return win ? currentMover : false;
 };

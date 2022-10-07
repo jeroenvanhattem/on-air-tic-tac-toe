@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
+import { aiMoves } from "../../functions/aiMove"
 import { checkWin } from "../../functions/checkWin"
 import { generateBoard } from "../../functions/generateBoard"
 import { updateBoard } from "../../functions/updateBoard"
@@ -12,18 +13,27 @@ export const Board = () => {
 
   const [board, setBoard] = useState<any>(null)
   const { gridSize } = useSelector((state: any) => state?.board)
-  const { currentMover, moves } = useSelector((state: any) => state?.game)
+  const { currentMover, moves, finished, cpu } = useSelector((state: any) => state?.game)
 
   const makeMove = (position: [number, number]) => {
     const [row, col] = position
     console.log(position)
-    if (board[row][col] === '') {
+    if (board[row][col] === '' && !finished) {
       const move = { mover: currentMover, position }
       dispatch({ type: 'ADD_MOVE', payload: move })
       dispatch({ type: 'SET_CURRENT_MOVER', payload: currentMover === 'x' ? 'o' : 'x' })
+      if (cpu) {
+        aiMakeMove()
+      }
     } else {
       console.log('Already occupied')
     }
+  }
+
+  const aiMakeMove = () => {
+    // const move = { mover: currentMover, position: [0, 0] }
+    const move = aiMoves({ moves, gridSize })
+    // dispatch({ type: 'ADD_MOVE', payload: move })
   }
 
   useEffect(() => {
@@ -33,7 +43,6 @@ export const Board = () => {
 
   useEffect(() => {
     // Execute the moves on the board using a command pattern.
-    console.log('Moves', moves)
     const newBoard = updateBoard({ moves, gridSize })
     setBoard(newBoard)
     const win = checkWin({ board: newBoard, currentMover: currentMover === 'x' ? 'o' : 'x' })

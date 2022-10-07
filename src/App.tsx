@@ -12,12 +12,8 @@ const App = () => {
   const dispatch = useDispatch()
   const { winner, started } = useSelector((state: any) => state?.game)
 
-  const style = {
-    backgroundColor: winner ? winner === 'x' ? '#fc4d3c' : '#3cebfc' : 'black'
-  }
-
   return (
-    <div className="App" style={style}>
+    <div className="App">
       {winner &&
         <Confetti />}
       <div className='Header'>
