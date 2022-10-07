@@ -17,13 +17,15 @@ export const Board = () => {
 
   const makeMove = (position: [number, number]) => {
     const [row, col] = position
-    console.log(position)
     if (board[row][col] === '' && !finished) {
       const move = { mover: currentMover, position }
       dispatch({ type: 'ADD_MOVE', payload: move })
-      dispatch({ type: 'SET_CURRENT_MOVER', payload: currentMover === 'x' ? 'o' : 'x' })
       if (cpu) {
         aiMakeMove()
+        // SWITCH PLAYER FOR TESTING PURPOSES
+        // dispatch({ type: 'SET_CURRENT_MOVER', payload: currentMover === 'x' ? 'o' : 'x' })
+      } else {
+        dispatch({ type: 'SET_CURRENT_MOVER', payload: currentMover === 'x' ? 'o' : 'x' })
       }
     } else {
       console.log('Already occupied')
@@ -31,9 +33,9 @@ export const Board = () => {
   }
 
   const aiMakeMove = () => {
-    // const move = { mover: currentMover, position: [0, 0] }
     const move = aiMoves({ moves, gridSize })
-    // dispatch({ type: 'ADD_MOVE', payload: move })
+    console.log('AI move: ', move)
+    dispatch({ type: 'ADD_MOVE', payload: move })
   }
 
   useEffect(() => {
@@ -45,8 +47,16 @@ export const Board = () => {
     // Execute the moves on the board using a command pattern.
     const newBoard = updateBoard({ moves, gridSize })
     setBoard(newBoard)
-    const win = checkWin({ board: newBoard, currentMover: currentMover === 'x' ? 'o' : 'x' })
-    if (win) {
+    let win: any = ''
+    if (!cpu) win = checkWin({ board: newBoard, currentMover: currentMover === 'x' ? 'o' : 'x' })
+    if (cpu) {
+      console.log('Checking for win')
+      win = checkWin({ board: newBoard, currentMover: 'x' })
+      console.log('Win: ', win)
+      if (win === 'x' || win === 'o') win = checkWin({ board: newBoard, currentMover: 'o' })
+      console.log('Win: ', win)
+    }
+    if (win === 'x' || win === 'o') {
       dispatch({ type: 'SET_WINNER', payload: currentMover === 'x' ? 'o' : 'x' })
     }
   }, [moves])
@@ -55,16 +65,17 @@ export const Board = () => {
     <div className={styles.Board}>
       {board && [...Array(gridSize)].map((_, i) => {
         return (
-          <div className={styles.Row}>
+          <div className={styles.Row} key={`${i}`}>
             {
               [...Array(gridSize)].map((_, j) => {
                 return (
                   <div
                     className={styles.Cell}
                     onClick={() => { makeMove([i, j]) }}
+                    key={`cell-${i}-${j}`}
                   >
                     {board[i][j] !== '' ?
-                      <TileIcon content={board[i][j]} /> : ''}
+                      <TileIcon content={board[i][j]} id={`tile-${i}-${j}`} /> : ''}
                   </div>
                 )
               })

@@ -43,10 +43,10 @@ export const gameReducer = (state = initialState, action: any) => {
 			};
 		case t.CLEAR_GAME:
 			return {
+				...state,
 				currentMover: "x",
 				moves: [],
 				winner: false,
-				started: true,
 				finished: false,
 			};
 		case t.SET_CPU:
