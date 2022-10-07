@@ -8,16 +8,11 @@ import { TileIcon } from "../Tile/TileIcon"
 import styles from "./Board.module.scss"
 
 export const Board = () => {
-
-  // MOVE ALL OF THIS TO REDUX 
-
   const dispatch = useDispatch()
 
-  // const { board } = useSelector((state: any) => state?.board)
   const [board, setBoard] = useState<any>(null)
   const { gridSize } = useSelector((state: any) => state?.board)
   const { currentMover, moves } = useSelector((state: any) => state?.game)
-
 
   const makeMove = (position: [number, number]) => {
     const [row, col] = position

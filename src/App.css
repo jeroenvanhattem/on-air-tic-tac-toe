@@ -10,17 +10,15 @@
 
 .Header {
   display: flex;
-  flex: 1;
   flex-direction: column;
   align-items: center;
   padding-top: 16px;
   padding-bottom: 16px;
+  margin-bottom: 64px;
 }
 
 .Container {
   display: flex;
   flex: 1;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
