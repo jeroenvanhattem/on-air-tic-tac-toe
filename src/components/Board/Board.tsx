@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react"
-import { checkWin } from "../../functions/CheckWin"
+import { checkWin } from "../../functions/checkWin"
 import { BoardType } from "../../types/Board"
 import "./Board.scss"
 
 export const Board = () => {
-  const testBoard = useState<any>([
+  const [testBoard, setTestBoard] = useState<any>([
     ['x', 'x', 'x'],
     ['o', '', 'o'],
     ['o', 'x', 'o']
   ])
+
+  const [currentMove, setCurrentMove] = useState<string>('x')
 
 
   useEffect(() => {

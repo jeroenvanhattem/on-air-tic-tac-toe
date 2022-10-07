@@ -1,6 +1,7 @@
 import { BoardType } from "../types/Board";
 
 export const checkWin = ({ board }: { board: BoardType | any }) => {
+	console.log(board);
 	const gridSize = board.length;
 	console.log("gridSize", gridSize);
 	return true;
