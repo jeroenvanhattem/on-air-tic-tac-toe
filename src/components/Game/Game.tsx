@@ -15,8 +15,15 @@ export const Game = () => {
   return (
     <div className={styles.Game}>
       <Menu />
-      <Score />
-      <Board />
+      <div className={styles.Container}>
+        <div className={styles.Spacer} />
+        <div className={styles.Board} >
+          <Board />
+        </div>
+        <div className={styles.Score}>
+          <Score />
+        </div>
+      </div>
       {!winner &&
         <CurrentMover />
       }
@@ -24,7 +31,6 @@ export const Game = () => {
         <Winner />
       }
     </div>
-
   )
 }
 

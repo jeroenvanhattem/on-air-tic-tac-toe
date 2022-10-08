@@ -40,11 +40,14 @@ export const gameReducer = (state = initialState, action: any) => {
 					: state.moves.length > 1
 					? state.moves.slice(0, state.moves.length - 1)
 					: [],
-				currentMover: state.cpu
-					? state.currentMover
-					: state.currentMover === "x"
-					? "o"
-					: "x",
+				currentMover:
+					state.moves.length > 0
+						? state.cpu
+							? state.currentMover
+							: state.currentMover === "x"
+							? "o"
+							: "x"
+						: state.currentMover,
 			};
 		case t.SET_WINNER:
 			return {

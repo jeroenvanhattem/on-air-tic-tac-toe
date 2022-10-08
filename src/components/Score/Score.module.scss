@@ -1,5 +1,17 @@
 .Score {
 	display: flex;
+	flex-direction: column;
+	min-height: 100%;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.Score > h1 {
+	color: #fc4d3c;
+	margin: 0;
+}
+.Scores {
+	display: flex;
 	flex-direction: row;
 	min-height: 100%;
 	justify-content: space-between;
