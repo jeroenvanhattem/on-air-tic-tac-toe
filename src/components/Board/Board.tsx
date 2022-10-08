@@ -20,10 +20,8 @@ export const Board = () => {
     if (board[row][col] === '' && !finished) {
       const move = { mover: currentMover, position }
       dispatch({ type: 'ADD_MOVE', payload: move })
-      if (cpu) {
+      if (cpu && !finished) {
         aiMakeMove()
-        // SWITCH PLAYER FOR TESTING PURPOSES
-        // dispatch({ type: 'SET_CURRENT_MOVER', payload: currentMover === 'x' ? 'o' : 'x' })
       } else {
         dispatch({ type: 'SET_CURRENT_MOVER', payload: currentMover === 'x' ? 'o' : 'x' })
       }

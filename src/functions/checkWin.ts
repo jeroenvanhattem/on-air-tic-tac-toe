@@ -10,10 +10,10 @@ export const checkWin = ({
 	const gridSize = board.length;
 
 	let win = false;
-	win = checkRow({ board, currentMover });
-	if (!win) win = checkColumn({ board, currentMover });
-	if (!win) win = checkDiagonal({ board, currentMover });
+	win = checkDiagonal({ board, currentMover });
 	if (!win) win = checkInvertedDiagonal({ board, currentMover });
+	if (!win) win = checkColumn({ board, currentMover });
+	if (!win) win = checkRow({ board, currentMover });
 
 	return win ? currentMover : false;
 };

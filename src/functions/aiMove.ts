@@ -2,7 +2,7 @@ import { MoveType } from "../types/Game";
 import { checkWin } from "./checkWin";
 import { generateBoard } from "./generateBoard";
 
-export const _aiMoves = ({
+export const aiMoves = ({
 	moves,
 	gridSize,
 }: {
@@ -32,15 +32,19 @@ export const _aiMoves = ({
 	// If there is, make that move.
 	// If there isn't, make a random move.
 
-	// Check for winning move
-	checkForWinningMove({ board, gridSize });
-	checkForBlockingMove({ board, gridSize });
-	checkForCenterMove({ board, gridSize });
-	checkForCornerMove({ board, gridSize });
-	checkForEdgeMove({ board, gridSize });
-	makeRandomMove({ board, gridSize });
+	let move: MoveType | boolean = {
+		position: [0, 0],
+		mover: "o",
+	};
 
-	return false;
+	move = checkForWinningMove({ board, gridSize });
+	if (!move) move = checkForBlockingMove({ board, gridSize });
+	if (!move) move = checkForCenterMove({ board, gridSize });
+	if (!move) move = checkForCornerMove({ board, gridSize });
+	if (!move) move = checkForEdgeMove({ board, gridSize });
+	if (!move) move = makeRandomMove({ board, gridSize });
+
+	return move;
 };
 
 const checkForWinningMove = ({
@@ -50,6 +54,10 @@ const checkForWinningMove = ({
 	board: any;
 	gridSize: number;
 }) => {
+	let move: MoveType | false = {
+		position: [0, 0],
+		mover: "o",
+	};
 	for (let i = 0; i < gridSize; i++) {
 		for (let j = 0; j < gridSize; j++) {
 			if (board[i][j] === "") {
@@ -60,11 +68,13 @@ const checkForWinningMove = ({
 				if (win) {
 					console.log("AI is making a winning move");
 					console.log(tempBoard);
-					return [i, j];
+					move.position = [i, j];
+					return move;
 				}
 			}
 		}
 	}
+	return false;
 };
 
 const checkForBlockingMove = ({
@@ -73,7 +83,30 @@ const checkForBlockingMove = ({
 }: {
 	board: any;
 	gridSize: number;
-}) => {};
+}) => {
+	console.log("Checking for blocking move");
+	let move: MoveType | false = {
+		position: [0, 0],
+		mover: "o",
+	};
+	for (let i = 0; i < gridSize; i++) {
+		for (let j = 0; j < gridSize; j++) {
+			if (board[i][j] === "") {
+				let tempBoard = board;
+				tempBoard[i][j] = "x";
+				console.log("AI is contemplating move", i, j);
+				const win = checkWin({ board: tempBoard, currentMover: "x" });
+				if (win) {
+					console.log("AI is making a blocking move");
+					console.log(tempBoard);
+					move.position = [i, j];
+					return move;
+				}
+			}
+		}
+	}
+	return false;
+};
 
 const checkForCenterMove = ({
 	board,
@@ -81,7 +114,9 @@ const checkForCenterMove = ({
 }: {
 	board: any;
 	gridSize: number;
-}) => {};
+}) => {
+	return false;
+};
 
 const checkForCornerMove = ({
 	board,
@@ -89,7 +124,9 @@ const checkForCornerMove = ({
 }: {
 	board: any;
 	gridSize: number;
-}) => {};
+}) => {
+	return false;
+};
 
 const checkForEdgeMove = ({
 	board,
@@ -97,7 +134,9 @@ const checkForEdgeMove = ({
 }: {
 	board: any;
 	gridSize: number;
-}) => {};
+}) => {
+	return false;
+};
 
 const makeRandomMove = ({
 	board,
@@ -105,10 +144,26 @@ const makeRandomMove = ({
 }: {
 	board: any;
 	gridSize: number;
-}) => {};
+}) => {
+	console.log("Making random move");
+	let move: MoveType = {
+		position: [0, 0],
+		mover: "o",
+	};
+	let moveMade = false;
+	while (!moveMade) {
+		let row = Math.floor(Math.random() * gridSize);
+		let column = Math.floor(Math.random() * gridSize);
+		if (board[row][column] === "") {
+			move.position = [row, column];
+			moveMade = true;
+		}
+	}
+	return move;
+};
 
 // let the cpu make a move based on the current board
-export const aiMoves = ({
+export const _aiMoves = ({
 	moves,
 	gridSize,
 }: {
