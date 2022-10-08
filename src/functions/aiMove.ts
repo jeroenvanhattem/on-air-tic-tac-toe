@@ -100,6 +100,7 @@ const checkForBlockingMove = ({
 
 	console.log("Checking for blocking move");
 	console.log("Last move: ", lastMove);
+	console.log("Blocking with board: ", board);
 
 	for (let i = 0; i < gridSize; i++) {
 		for (let j = 0; j < gridSize; j++) {

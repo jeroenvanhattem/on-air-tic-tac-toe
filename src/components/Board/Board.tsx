@@ -14,7 +14,7 @@ export const Board = () => {
 
   const [board, setBoard] = useState<any>(null)
   const { gridSize } = useSelector((state: any) => state?.board)
-  const { currentMover, moves, finished, cpu } = useSelector((state: any) => state?.game)
+  const { currentMover, moves, winner, finished, cpu } = useSelector((state: any) => state?.game)
 
   const makeMove = (position: [number, number]) => {
     const [row, col] = position
