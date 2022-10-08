@@ -5,6 +5,7 @@ import { checkWin } from "../../functions/checkWin"
 import { generateBoard } from "../../functions/generateBoard"
 import { updateBoard } from "../../functions/updateBoard"
 import { BoardType } from "../../types/Board"
+import { MoveType } from "../../types/Game"
 import { TileIcon } from "../Tile/TileIcon"
 import styles from "./Board.module.scss"
 
@@ -21,7 +22,7 @@ export const Board = () => {
       const move = { mover: currentMover, position }
       dispatch({ type: 'ADD_MOVE', payload: move })
       if (cpu && !finished) {
-        aiMakeMove()
+        aiMakeMove({ lastMove: move })
       } else {
         dispatch({ type: 'SET_CURRENT_MOVER', payload: currentMover === 'x' ? 'o' : 'x' })
       }
@@ -30,8 +31,27 @@ export const Board = () => {
     }
   }
 
-  const aiMakeMove = () => {
-    const move = aiMoves({ moves, gridSize })
+  const afterMove = ({ board }: { board: any }) => {
+    let win: any = ''
+    if (!cpu) win = checkWin({ board, currentMover: currentMover === 'x' ? 'o' : 'x' })
+    if (cpu) {
+      console.log('Checking for win')
+      win = checkWin({ board, currentMover: 'x' })
+      console.log('Checking with board:', board)
+      console.log('Win: ', win)
+      if (win !== 'x' && win !== 'o') win = checkWin({ board, currentMover: 'o' })
+      console.log('Win: ', win)
+    }
+    if (!win && moves.length === gridSize * gridSize) {
+      dispatch({ type: 'SET_WINNER', payload: 'draw' })
+    }
+    if (win === 'x' || win === 'o') {
+      dispatch({ type: 'SET_WINNER', payload: win })
+    }
+  }
+
+  const aiMakeMove = ({ lastMove }: { lastMove: MoveType }) => {
+    const move = aiMoves({ moves, gridSize, lastMove })
     console.log('AI move: ', move)
     dispatch({ type: 'ADD_MOVE', payload: move })
   }
@@ -45,22 +65,7 @@ export const Board = () => {
     // Execute the moves on the board using a command pattern.
     const newBoard = updateBoard({ moves, gridSize })
     setBoard(newBoard)
-    let win: any = ''
-    if (!cpu) win = checkWin({ board: newBoard, currentMover: currentMover === 'x' ? 'o' : 'x' })
-    if (cpu) {
-      console.log('Checking for win')
-      win = checkWin({ board: newBoard, currentMover: 'x' })
-      console.log('Checking with board:', newBoard)
-      console.log('Win: ', win)
-      if (win !== 'x' && win !== 'o') win = checkWin({ board: newBoard, currentMover: 'o' })
-      console.log('Win: ', win)
-    }
-    if (!win && moves.length === gridSize * gridSize) {
-      dispatch({ type: 'SET_WINNER', payload: 'draw' })
-    }
-    if (win === 'x' || win === 'o') {
-      dispatch({ type: 'SET_WINNER', payload: win })
-    }
+    afterMove({ board: newBoard })
   }, [moves])
 
   return (

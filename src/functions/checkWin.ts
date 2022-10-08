@@ -7,8 +7,6 @@ export const checkWin = ({
 	board: BoardType | any;
 	currentMover: string;
 }) => {
-	const gridSize = board.length;
-
 	let win = false;
 	win = checkDiagonal({ board, currentMover });
 	if (!win) win = checkInvertedDiagonal({ board, currentMover });
