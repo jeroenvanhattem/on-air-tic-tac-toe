@@ -37,12 +37,15 @@ export const aiMoves = ({
 		mover: "o",
 	};
 
+	if (moves.length === gridSize * gridSize - 1) {
+		return false;
+	}
 	move = checkForWinningMove({ board, gridSize, lastMove });
 	if (!move) move = checkForBlockingMove({ board, gridSize, lastMove });
 	if (!move) move = checkForCenterMove({ board, gridSize, lastMove });
 	if (!move) move = checkForCornerMove({ board, gridSize, lastMove });
 	if (!move) move = checkForEdgeMove({ board, gridSize, lastMove });
-	if (!move) move = makeRandomMove({ board, gridSize, lastMove, moves });
+	if (!move) move = makeRandomMove({ board, gridSize, lastMove });
 
 	console.log("AI making move: ", move);
 
@@ -163,12 +166,10 @@ const makeRandomMove = ({
 	board,
 	gridSize,
 	lastMove,
-	moves,
 }: {
 	board: any;
 	gridSize: number;
 	lastMove: MoveType;
-	moves: MoveType[];
 }) => {
 	console.log("Making random move");
 	let move: MoveType = {
@@ -176,9 +177,6 @@ const makeRandomMove = ({
 		mover: "o",
 	};
 	let moveMade = false;
-	if (moves.length === gridSize * gridSize - 1) {
-		return false;
-	}
 	while (!moveMade) {
 		let row = Math.floor(Math.random() * gridSize);
 		let column = Math.floor(Math.random() * gridSize);
