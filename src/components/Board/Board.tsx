@@ -52,12 +52,13 @@ export const Board = () => {
     if (cpu) {
       console.log('Checking for win')
       win = checkWin({ board: newBoard, currentMover: 'x' })
+      console.log('Checking with board:', newBoard)
       console.log('Win: ', win)
-      if (win === 'x' || win === 'o') win = checkWin({ board: newBoard, currentMover: 'o' })
+      if (win !== 'x' && win !== 'o') win = checkWin({ board: newBoard, currentMover: 'o' })
       console.log('Win: ', win)
     }
     if (win === 'x' || win === 'o') {
-      dispatch({ type: 'SET_WINNER', payload: currentMover === 'x' ? 'o' : 'x' })
+      dispatch({ type: 'SET_WINNER', payload: win })
     }
   }, [moves])
 

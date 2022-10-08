@@ -8,7 +8,6 @@ export const StartScreen = () => {
   const dispatch = useDispatch()
   const { winner, gameStarted, cpu } = useSelector((state: any) => state?.game)
   const { gridSize } = useSelector((state: any) => state?.board)
-  const [localGridSize, setLocalGridSize] = useState()
 
   const start = () => {
     dispatch({ type: 'SET_GAME_STARTED', payload: true })
@@ -31,7 +30,13 @@ export const StartScreen = () => {
     <div className="StartScreen">
       <div className={styles.Container}>
         <h2>Grid size</h2>
-        <input className={styles.GridSize} onChange={(state) => setGridSize(state?.target?.value)} id="gridSize" type="text" placeholder="Grid size" defaultValue={gridSize} />
+        <div className={styles.GridSetup}>
+          <button className={styles.GridButton} onClick={() => setGridSize(gridSize > 3 ? gridSize - 1 : gridSize)}>-</button>
+          <div className={styles.GridSize}>
+            {gridSize}
+          </div>
+          <button className={styles.GridButton} onClick={() => setGridSize(gridSize < 9 ? gridSize + 1 : gridSize)}>+</button>
+        </div>
 
         <h2>Playing solo or with a friend?</h2>
         <div className={styles.Players}>
@@ -49,7 +54,7 @@ export const StartScreen = () => {
           className={styles.StartButton}
         >Let's start!</button>
       </div>
-    </div>
+    </div >
   )
 }
 

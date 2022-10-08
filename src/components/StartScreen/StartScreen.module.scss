@@ -20,6 +20,13 @@
 	align-items: center;
 }
 
+.GridSetup {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+}
+
 .GridSize {
 	display: flex;
 	flex-direction: row;
@@ -46,6 +53,20 @@
 	justify-content: center;
 	align-items: center;
 	background-color: #ccc;
+}
+
+.GridButton {
+	display: flex;
+	border: none;
+	width: 48px;
+	height: 48px;
+	margin: 16px;
+	border-radius: 8px;
+	font-size: 28px;
+	justify-content: center;
+	align-items: center;
+	color: white;
+	background-color: #333;
 }
 
 .StartButton {
