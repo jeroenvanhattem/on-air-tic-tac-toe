@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Board } from '../Board'
 import { CurrentMover } from '../CurrentMover/CurrentMover'
 import { Menu } from '../Menu/Menu'
+import { Score } from '../Score/Score'
 import { TileIcon } from '../Tile/TileIcon'
 import { Winner } from '../Winner/Winner'
 import styles from './Game.module.scss'
@@ -14,6 +15,7 @@ export const Game = () => {
   return (
     <div className={styles.Game}>
       <Menu />
+      <Score />
       <Board />
       {!winner &&
         <CurrentMover />

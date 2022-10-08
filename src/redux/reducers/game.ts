@@ -7,6 +7,10 @@ const initialState = {
 	cpu: false,
 	started: false,
 	finished: false,
+	wins: {
+		x: 0,
+		o: 0,
+	},
 };
 
 export const gameReducer = (state = initialState, action: any) => {
@@ -60,6 +64,19 @@ export const gameReducer = (state = initialState, action: any) => {
 			return {
 				...state,
 				cpu: action.payload,
+			};
+		case t.SET_WINS:
+			return {
+				...state,
+				wins: action.payload,
+			};
+		case t.CLEAR_WINS:
+			return {
+				...state,
+				wins: {
+					x: 0,
+					o: 0,
+				},
 			};
 		case t.SET_FINISHED:
 			return {

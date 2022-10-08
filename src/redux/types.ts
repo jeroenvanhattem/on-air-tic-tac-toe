@@ -7,3 +7,5 @@ export const SET_CPU = "SET_CPU";
 export const UNDO_MOVE = "UNDO_MOVE";
 export const SET_CURRENT_MOVER = "SET_CURRENT_MOVER";
 export const SET_FINISHED = "SET_FINISHED";
+export const SET_WINS = "SET_WINS";
+export const CLEAR_WINS = "CLEAR_WINS";

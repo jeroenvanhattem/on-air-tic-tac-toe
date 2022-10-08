@@ -14,7 +14,7 @@ export const Board = () => {
 
   const [board, setBoard] = useState<any>(null)
   const { gridSize } = useSelector((state: any) => state?.board)
-  const { currentMover, moves, winner, finished, cpu } = useSelector((state: any) => state?.game)
+  const { currentMover, moves, wins, finished, cpu } = useSelector((state: any) => state?.game)
 
   const makeMove = (position: [number, number]) => {
     const [row, col] = position
@@ -47,6 +47,9 @@ export const Board = () => {
     }
     if (win === 'x' || win === 'o') {
       dispatch({ type: 'SET_WINNER', payload: win })
+      dispatch({
+        type: 'SET_WINS', payload: { x: wins.x + (win === 'x' ? 1 : 0), o: wins.o + (win === 'o' ? 1 : 0) }
+      })
     }
   }
 

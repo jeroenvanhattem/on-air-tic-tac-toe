@@ -7,6 +7,7 @@ export const ExitButton = () => {
   const exit = () => {
     dispatch({ type: 'CLEAR_GAME' })
     dispatch({ type: 'SET_GAME_STARTED', payload: false })
+    dispatch({ type: 'CLEAR_WINS', payload: false })
   }
 
   return (
