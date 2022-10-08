@@ -53,7 +53,9 @@ export const Board = () => {
   const aiMakeMove = ({ lastMove }: { lastMove: MoveType }) => {
     const move = aiMoves({ moves, gridSize, lastMove })
     console.log('AI move: ', move)
-    dispatch({ type: 'ADD_MOVE', payload: move })
+    if (move) {
+      dispatch({ type: 'ADD_MOVE', payload: move })
+    }
   }
 
   useEffect(() => {

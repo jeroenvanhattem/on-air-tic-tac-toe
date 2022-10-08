@@ -14,7 +14,7 @@ const App = () => {
 
   return (
     <div className="App">
-      {winner &&
+      {(winner === 'x' || winner === 'o') &&
         <Confetti />}
       <div className='Header'>
         <OnAirLogo />

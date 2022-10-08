@@ -42,13 +42,14 @@ export const aiMoves = ({
 	if (!move) move = checkForCenterMove({ board, gridSize, lastMove });
 	if (!move) move = checkForCornerMove({ board, gridSize, lastMove });
 	if (!move) move = checkForEdgeMove({ board, gridSize, lastMove });
-	if (!move) move = makeRandomMove({ board, gridSize, lastMove });
+	if (!move) move = makeRandomMove({ board, gridSize, lastMove, moves });
 
 	console.log("AI making move: ", move);
 
 	return move;
 };
 
+// Winning move working
 const checkForWinningMove = ({
 	board,
 	gridSize,
@@ -62,17 +63,14 @@ const checkForWinningMove = ({
 		position: [0, 0],
 		mover: "o",
 	};
-	console.log("Last move: ", lastMove);
 	for (let i = 0; i < gridSize; i++) {
 		for (let j = 0; j < gridSize; j++) {
 			if (board[i][j] === "") {
 				if (i !== lastMove.position[0] && j !== lastMove.position[1]) {
 					let tempBoard = board;
 					tempBoard[i][j] = "o";
-					console.log("AI is contemplating move", i, j);
 					const win = checkWin({ board: tempBoard, currentMover: "o" });
 					if (win) {
-						console.log("AI is making a winning move");
 						move.position = [i, j];
 						return move;
 					}
@@ -92,15 +90,21 @@ const checkForBlockingMove = ({
 	gridSize: number;
 	lastMove: MoveType;
 }) => {
-	console.log("Checking for blocking move");
 	let move: MoveType | false = {
 		position: [0, 0],
 		mover: "o",
 	};
+
+	console.log("Checking for blocking move");
+	console.log("Last move: ", lastMove);
+
 	for (let i = 0; i < gridSize; i++) {
 		for (let j = 0; j < gridSize; j++) {
+			console.log("Checking position: ", i, j);
 			if (board[i][j] === "") {
+				console.log("This cell is blockable");
 				if (i !== lastMove.position[0] && j !== lastMove.position[1]) {
+					console.log("Blocking move not taken yet");
 					let tempBoard = board;
 					tempBoard[i][j] = "x";
 					console.log("AI is contemplating move", i, j);
@@ -154,22 +158,27 @@ const checkForEdgeMove = ({
 	return false;
 };
 
+// Random move working
 const makeRandomMove = ({
 	board,
 	gridSize,
 	lastMove,
+	moves,
 }: {
 	board: any;
 	gridSize: number;
 	lastMove: MoveType;
+	moves: MoveType[];
 }) => {
 	console.log("Making random move");
-	console.log("Last move: ", lastMove);
 	let move: MoveType = {
 		position: [0, 0],
 		mover: "o",
 	};
 	let moveMade = false;
+	if (moves.length === gridSize * gridSize - 1) {
+		return false;
+	}
 	while (!moveMade) {
 		let row = Math.floor(Math.random() * gridSize);
 		let column = Math.floor(Math.random() * gridSize);
@@ -178,8 +187,6 @@ const makeRandomMove = ({
 			column = Math.floor(Math.random() * gridSize);
 		}
 		if (board[row][column] === "") {
-			console.log("Random move at: " + row + " | " + column);
-			console.log("We can make this move!");
 			move.position = [row, column];
 			moveMade = true;
 		}
