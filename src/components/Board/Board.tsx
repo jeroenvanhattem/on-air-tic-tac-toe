@@ -57,6 +57,9 @@ export const Board = () => {
       if (win !== 'x' && win !== 'o') win = checkWin({ board: newBoard, currentMover: 'o' })
       console.log('Win: ', win)
     }
+    if (!win && moves.length === gridSize * gridSize) {
+      dispatch({ type: 'SET_WINNER', payload: 'draw' })
+    }
     if (win === 'x' || win === 'o') {
       dispatch({ type: 'SET_WINNER', payload: win })
     }
