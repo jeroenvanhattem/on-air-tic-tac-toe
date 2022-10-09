@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import './App.css'
-import { Board } from './components/Board'
+import { Board } from './components/Board/Board'
 import { Game } from './components/Game/Game'
 import { OnAirLogo } from './components/Logo/OnAirLogo'
 import { TicTacToeLogo } from './components/Logo/TicTacToeLogo'

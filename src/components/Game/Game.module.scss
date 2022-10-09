@@ -31,7 +31,21 @@
 	justify-content: center;
 }
 
+.Side {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	justify-content: center;
+}
+
 .Score {
+	display: flex;
+	flex: 1;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.PlayerInfo {
 	display: flex;
 	flex: 1;
 	flex-direction: row;

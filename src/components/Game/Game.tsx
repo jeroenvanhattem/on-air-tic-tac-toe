@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Board } from '../Board'
+import { Board } from '../Board/Board'
 import { CurrentMover } from '../CurrentMover/CurrentMover'
 import { Menu } from '../Menu/Menu'
 import { Score } from '../Score/Score'
@@ -20,16 +20,20 @@ export const Game = () => {
         <div className={styles.Board} >
           <Board />
         </div>
-        <div className={styles.Score}>
-          <Score />
+        <div className={styles.Side}>
+          <div className={styles.Score}>
+            <Score />
+          </div>
+          <div className={styles.PlayerInfo}>
+            {!winner &&
+              <CurrentMover />
+            }
+            {winner &&
+              <Winner />
+            }
+          </div>
         </div>
       </div>
-      {!winner &&
-        <CurrentMover />
-      }
-      {winner &&
-        <Winner />
-      }
     </div>
   )
 }
