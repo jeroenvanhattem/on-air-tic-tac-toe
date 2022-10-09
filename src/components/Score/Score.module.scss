@@ -36,3 +36,15 @@
 #O {
 	color: #3cebfc;
 }
+
+@media screen and (max-width: 768px) {
+	.Score {
+		margin-top: 16px;
+		// background-color: salmon;
+	}
+
+	.Score > h1 {
+		font-size: 24px;
+		margin: 0;
+	}
+}

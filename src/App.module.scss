@@ -1,0 +1,15 @@
+.App {
+	background: black;
+	width: 100vw;
+	max-width: 100vw;
+	min-height: 100vh;
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+}
+
+.Container {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+}

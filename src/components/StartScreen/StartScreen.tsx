@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Board } from '../Board'
+import { Board } from '../Board/Board'
 import { Menu } from '../Menu/Menu'
 import styles from './StartScreen.module.scss'
 
@@ -35,7 +35,7 @@ export const StartScreen = () => {
           <div className={styles.GridSize}>
             {gridSize}
           </div>
-          <button className={styles.GridButton} onClick={() => setGridSize(gridSize < 9 ? gridSize + 1 : gridSize)}>+</button>
+          <button className={styles.GridButton} onClick={() => setGridSize(gridSize < 5 ? gridSize + 1 : gridSize)}>+</button>
         </div>
 
         <h2>Playing solo or with a friend?</h2>

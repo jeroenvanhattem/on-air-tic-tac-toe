@@ -29,7 +29,6 @@
 	flex-grow: 1;
 	flex-direction: column;
 	align-items: center;
-	// background-color: salmon;
 }
 
 .Side {
@@ -51,4 +50,11 @@
 	flex: 1;
 	flex-direction: row;
 	justify-content: center;
+}
+
+@media screen and (max-width: 1024px) and (orientation: portrait) {
+	.Container {
+		flex-direction: column-reverse;
+		margin: 0px;
+	}
 }

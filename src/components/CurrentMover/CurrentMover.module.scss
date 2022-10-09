@@ -1,5 +1,15 @@
 .CurrentMover {
 	display: flex;
 	flex-direction: column;
-	padding: 8px;
+	// padding: 8px;
+}
+.CurrentMover > h1 {
+	color: #fc4d3c;
+	margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+	.CurrentMover > h1 {
+		font-size: 24px;
+	}
 }
