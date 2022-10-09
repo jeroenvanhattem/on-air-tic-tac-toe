@@ -16,14 +16,15 @@ export const Game = () => {
     <div className={styles.Game}>
       <Menu />
       <div className={styles.Container}>
-        <div className={styles.Spacer} />
-        <div className={styles.Board} >
-          <Board />
-        </div>
         <div className={styles.Side}>
           <div className={styles.Score}>
             <Score />
           </div>
+        </div>
+        <div className={styles.Board} >
+          <Board />
+        </div>
+        <div className={styles.Side}>
           <div className={styles.PlayerInfo}>
             {!winner &&
               <CurrentMover />

@@ -1,7 +1,10 @@
 .UndoButton {
 	display: flex;
 	background-color: #333;
-	padding: 16px;
+	width: 72px;
+	height: 48px;
+	justify-content: center;
+	align-items: center;
 	margin: 8px;
 	color: white;
 	font-size: 16px;
