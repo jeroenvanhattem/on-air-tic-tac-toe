@@ -5,7 +5,7 @@ import { updateBoard } from "./updateBoard";
 
 export const aiMoves = ({
 	board: _board,
-	moves,
+	moves: _moves,
 	gridSize,
 	lastMove,
 }: {
@@ -14,20 +14,19 @@ export const aiMoves = ({
 	gridSize: number;
 	lastMove: MoveType;
 }) => {
-	const _moves = moves;
-	if (moves.length < gridSize * gridSize) {
-		_moves.push(lastMove);
+	const moves = _moves;
+	moves.push(lastMove);
+
+	if (moves.length === gridSize * gridSize) {
+		return false;
 	}
-	const board = updateBoard({ gridSize, moves: _moves });
+
+	const board = updateBoard({ gridSize, moves: moves });
 
 	let move: MoveType | boolean = {
 		position: [0, 0],
 		mover: "o",
 	};
-
-	if (_moves.length === gridSize * gridSize) {
-		return false;
-	}
 
 	move = checkForWinningMove({ board: board, gridSize });
 	if (!move) move = checkForBlockingMove({ board: board, gridSize });
@@ -81,6 +80,12 @@ const checkForBlockingMove = ({
 		mover: "o",
 	};
 
+	// I know it's unnecessary to check for multiple winning moves, because 99% chance that the user will make another winning move when possible.
+	// This is just to confuse the user if they use the same strategy multiple times.
+	// This way they might not anticipate the AI to block their previously used winning move and they might slip up and lose anyway.
+
+	const optionalMoves: any[] = [];
+
 	for (let i = 0; i < gridSize; i++) {
 		for (let j = 0; j < gridSize; j++) {
 			if (board[i][j] === "") {
@@ -91,12 +96,23 @@ const checkForBlockingMove = ({
 				tempBoard[i][j] = "x";
 				const win = checkWin({ board: tempBoard, currentMover: "x" });
 				if (win) {
-					move.position = [i, j];
-					return move;
+					optionalMoves.push([i, j]);
 				}
 			}
 		}
 	}
+
+	if (optionalMoves.length > 0) {
+		const randomPosition = Math.floor(
+			Math.random() * (optionalMoves.length - 0)
+		);
+		move.position = [
+			optionalMoves[randomPosition][0],
+			optionalMoves[randomPosition][1],
+		];
+		return move;
+	}
+
 	return false;
 };
 
@@ -112,6 +128,8 @@ const checkForCenterMove = ({
 		mover: "o",
 	};
 
+	const optionalMoves: any[] = [];
+
 	// Find center of grid when odd
 	if (gridSize % 2 !== 0) {
 		const center = Math.floor(gridSize / 2);
@@ -120,7 +138,6 @@ const checkForCenterMove = ({
 			return move;
 		}
 	} else {
-		const optionalMoves: any[] = [];
 		// Find center of grid when even
 		const center1 = Math.floor(gridSize / 2) - 1;
 		const center2 = Math.floor(gridSize / 2);
