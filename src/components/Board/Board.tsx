@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { aiMoves } from "../../functions/aiMove"
 import { checkWin } from "../../functions/checkWin"
@@ -74,7 +74,7 @@ export const Board = () => {
   }, [moves])
 
   return (
-    <div className={styles.Board}>
+    <div className={styles.Board} data-testid="board">
       {board && [...Array(gridSize)].map((_, i) => {
         return (
           <div className={styles.Row} key={`${i}`}>
@@ -85,6 +85,7 @@ export const Board = () => {
                     className={styles.Cell}
                     onClick={() => { makeMove([i, j]) }}
                     key={`cell-${i}-${j}`}
+                    data-testid={`cell-${i}-${j}`}
                   >
                     {board[i][j] !== '' ?
                       <TileIcon content={board[i][j]} id={`tile-${i}-${j}`} /> : ''}
