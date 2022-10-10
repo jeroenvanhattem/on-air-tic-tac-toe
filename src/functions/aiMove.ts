@@ -80,7 +80,7 @@ const checkForBlockingMove = ({
 		mover: "o",
 	};
 
-	// I know it's unnecessary to check for multiple winning moves, because 99% chance that the user will make another winning move when possible.
+	// I know it's unnecessary to check for multiple blocking moves, because 99% chance that the user will make another winning move when possible.
 	// This is just to confuse the user if they use the same strategy multiple times.
 	// This way they might not anticipate the AI to block their previously used winning move and they might slip up and lose anyway.
 
