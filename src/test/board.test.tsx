@@ -14,6 +14,7 @@ import { checkWin } from "../functions/checkWin"
 describe("Board", () => {
   beforeAll(() => {
     store.dispatch({ type: "CLEAR_GAME" })
+    store.dispatch({ type: "SET_CPU", payload: false })
   })
 
   it("Play game", () => {

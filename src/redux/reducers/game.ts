@@ -4,7 +4,7 @@ const initialState = {
 	currentMover: "x",
 	moves: [],
 	winner: false,
-	cpu: false,
+	cpu: true,
 	started: false,
 	finished: false,
 	wins: {
