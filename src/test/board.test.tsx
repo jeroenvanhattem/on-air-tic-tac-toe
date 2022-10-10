@@ -6,6 +6,9 @@ import { store } from "../redux/store"
 import { Board } from "../components/Board/Board"
 import { renderWithContext } from "../utils/testUtils"
 import { Provider } from "react-redux"
+import { generateBoard } from "../functions/generateBoard"
+import { updateBoard } from "../functions/updateBoard"
+import { checkWin } from "../functions/checkWin"
 // import { act, } from "react-dom/test-utils"
 
 describe("Board", () => {
@@ -13,17 +16,17 @@ describe("Board", () => {
     store.dispatch({ type: "CLEAR_GAME" })
   })
 
-  it("Interact with board", () => {
+  it("Play game", () => {
     // const { winner, moves } = store.getState().game
 
     renderWithContext(<Provider store={store}>
       <Board />
     </Provider>)
 
-    const board = screen.getByTestId("board")
+    const boardComponent = screen.getByTestId("board")
 
     // Board is rendering
-    expect(board).toBeTruthy()
+    expect(boardComponent).toBeTruthy()
 
     const cellOne = screen.getByTestId("cell-0-0")
     expect(cellOne).toBeTruthy()
@@ -41,11 +44,10 @@ describe("Board", () => {
     // X should have won on the 3x3 board
 
     const { moves } = store.getState().game
-    console.log('moves')
-    console.log(moves)
-    const { winner } = store.getState().game
+    const board = updateBoard({ moves, gridSize: 3 })
+    const winner = checkWin({ board, currentMover: "x" })
+
     expect(winner).toBe("x")
 
-    console.log(winner)
   })
 })
