@@ -4,44 +4,33 @@ import { generateBoard } from "./generateBoard";
 import { updateBoard } from "./updateBoard";
 
 export const aiMoves = ({
+	board: _board,
 	moves,
 	gridSize,
 	lastMove,
 }: {
+	board: any;
 	moves: MoveType[];
 	gridSize: number;
 	lastMove: MoveType;
 }) => {
 	console.log("\n-----------------------------------------");
-	console.log("AI grid size: ", gridSize);
-	let board = updateBoard({ gridSize, moves });
 
-	console.log("Moves: ", moves);
-	console.log("AI is thinking");
-	console.log("This is the board: ", board);
-
-	// First check if the there's a winning move available.
-	// If there is, make that move.
-	// If there isn't, check if there's a blocking move available.
-	// If there is, make that move.
-	// If there isn't, check if there's a center move available.
-	// If there is, make that move.
-	// If there isn't, check if there's a corner move available.
-	// If there is, make that move.
-	// If there isn't, check if there's an edge move available.
-	// If there is, make that move.
-	// If there isn't, make a random move.
+	const _moves = moves;
+	_moves.push(lastMove);
+	const board = updateBoard({ gridSize, moves: _moves });
 
 	let move: MoveType | boolean = {
 		position: [0, 0],
 		mover: "o",
 	};
 
-	if (moves.length === gridSize * gridSize - 1) {
+	if (_moves.length === gridSize * gridSize - 1) {
 		return false;
 	}
-	move = checkForWinningMove({ board, gridSize, lastMove });
-	if (!move) move = checkForBlockingMove({ board, gridSize, lastMove });
+
+	move = checkForWinningMove({ board: board, gridSize, lastMove });
+	if (!move) move = checkForBlockingMove({ board: board, gridSize, lastMove });
 	if (!move) move = checkForCenterMove({ board, gridSize, lastMove });
 	if (!move) move = checkForCornerMove({ board, gridSize, lastMove });
 	if (!move) move = checkForEdgeMove({ board, gridSize, lastMove });
@@ -52,7 +41,6 @@ export const aiMoves = ({
 	return move;
 };
 
-// Winning move working
 const checkForWinningMove = ({
 	board,
 	gridSize,
@@ -70,7 +58,10 @@ const checkForWinningMove = ({
 		for (let j = 0; j < gridSize; j++) {
 			if (board[i][j] === "") {
 				if (i !== lastMove.position[0] && j !== lastMove.position[1]) {
-					let tempBoard = board;
+					let tempBoard = [];
+					for (let i = 0; i < board.length; i++) {
+						tempBoard.push([...board[i]]);
+					}
 					tempBoard[i][j] = "o";
 					const win = checkWin({ board: tempBoard, currentMover: "o" });
 					if (win) {
@@ -98,24 +89,23 @@ const checkForBlockingMove = ({
 		mover: "o",
 	};
 
-	console.log("Checking for blocking move");
-	console.log("Last move: ", lastMove);
-	console.log("Blocking with board: ", board);
-
 	for (let i = 0; i < gridSize; i++) {
 		for (let j = 0; j < gridSize; j++) {
-			console.log("Checking position: ", i, j);
+			// console.log("Checking position: ", i, j, board[i][j]);
 			if (board[i][j] === "") {
-				console.log("This cell is blockable");
+				// console.log("This cell is blockable");
 				if (i !== lastMove.position[0] && j !== lastMove.position[1]) {
-					console.log("Blocking move not taken yet");
-					let tempBoard = board;
+					// console.log("Blocking move not taken yet");
+					let tempBoard = [];
+					for (let i = 0; i < board.length; i++) {
+						tempBoard.push([...board[i]]);
+					}
 					tempBoard[i][j] = "x";
 					console.log("AI is contemplating move", i, j);
 					const win = checkWin({ board: tempBoard, currentMover: "x" });
 					if (win) {
 						console.log("AI is making a blocking move");
-						console.log(tempBoard);
+						// console.log(tempBoard);
 						move.position = [i, j];
 						return move;
 					}
@@ -172,7 +162,6 @@ const makeRandomMove = ({
 	gridSize: number;
 	lastMove: MoveType;
 }) => {
-	console.log("Making random move");
 	let move: MoveType = {
 		position: [0, 0],
 		mover: "o",
