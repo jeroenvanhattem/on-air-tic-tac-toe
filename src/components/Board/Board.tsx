@@ -26,8 +26,6 @@ export const Board = () => {
       } else {
         dispatch({ type: 'SET_CURRENT_MOVER', payload: currentMover === 'x' ? 'o' : 'x' })
       }
-    } else {
-      console.log('Already occupied')
     }
   }
 
@@ -35,12 +33,8 @@ export const Board = () => {
     let win: any = ''
     if (!cpu) win = checkWin({ board, currentMover: currentMover === 'x' ? 'o' : 'x' })
     if (cpu) {
-      console.log('Checking for win')
       win = checkWin({ board, currentMover: 'x' })
-      console.log('Checking with board:', board)
-      console.log('Win: ', win)
       if (win !== 'x' && win !== 'o') win = checkWin({ board, currentMover: 'o' })
-      console.log('Win: ', win)
     }
     if (!win && moves.length === gridSize * gridSize) {
       dispatch({ type: 'SET_WINNER', payload: 'draw' })
@@ -55,7 +49,6 @@ export const Board = () => {
 
   const aiMakeMove = ({ lastMove }: { lastMove: MoveType }) => {
     const move = aiMoves({ board, moves, gridSize, lastMove })
-    console.log('AI move: ', move)
     if (move) {
       dispatch({ type: 'ADD_MOVE', payload: move })
     }

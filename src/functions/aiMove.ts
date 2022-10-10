@@ -14,8 +14,6 @@ export const aiMoves = ({
 	gridSize: number;
 	lastMove: MoveType;
 }) => {
-	console.log("\n-----------------------------------------");
-
 	const _moves = moves;
 	if (moves.length < gridSize * gridSize) {
 		_moves.push(lastMove);
@@ -36,9 +34,7 @@ export const aiMoves = ({
 	if (!move) move = checkForCenterMove({ board, gridSize });
 	if (!move) move = checkForCornerMove({ board, gridSize });
 	if (!move) move = checkForEdgeMove({ board, gridSize });
-	if (!move) move = makeRandomMove({ board, gridSize });
-
-	console.log("AI making move: ", move);
+	if (!move) move = makeRandomMove({ board, gridSize, lastMove });
 
 	return move;
 };
@@ -95,7 +91,6 @@ const checkForBlockingMove = ({
 				tempBoard[i][j] = "x";
 				const win = checkWin({ board: tempBoard, currentMover: "x" });
 				if (win) {
-					console.log("AI is making a blocking move");
 					move.position = [i, j];
 					return move;
 				}
@@ -121,7 +116,6 @@ const checkForCenterMove = ({
 	if (gridSize % 2 !== 0) {
 		const center = Math.floor(gridSize / 2);
 		if (board[center][center] === "") {
-			console.log("Making center move");
 			move.position = [center, center];
 			return move;
 		}
@@ -130,19 +124,15 @@ const checkForCenterMove = ({
 		const center1 = Math.floor(gridSize / 2) - 1;
 		const center2 = Math.floor(gridSize / 2);
 		if (board[center1][center1] === "") {
-			console.log("Making center move");
 			move.position = [center1, center1];
 			return move;
 		} else if (board[center1][center2] === "") {
-			console.log("Making center move");
 			move.position = [center1, center2];
 			return move;
 		} else if (board[center2][center1] === "") {
-			console.log("Making center move");
 			move.position = [center2, center1];
 			return move;
 		} else if (board[center2][center2] === "") {
-			console.log("Making center move");
 			move.position = [center2, center2];
 			return move;
 		}
@@ -171,7 +161,6 @@ const checkForCornerMove = ({
 	for (let i = 0; i < corners.length; i++) {
 		const [x, y] = corners[i];
 		if (board[x][y] === "") {
-			console.log("Making corner move");
 			move.position = [x, y];
 			return move;
 		}
@@ -193,19 +182,15 @@ const checkForEdgeMove = ({
 	};
 	for (let i = 0; i < gridSize; i++) {
 		if (board[0][i] === "") {
-			console.log("Making edge move");
 			move.position = [0, i];
 			return move;
 		} else if (board[gridSize - 1][i] === "") {
-			console.log("Making edge move");
 			move.position = [gridSize - 1, i];
 			return move;
 		} else if (board[i][0] === "") {
-			console.log("Making edge move");
 			move.position = [i, 0];
 			return move;
 		} else if (board[i][gridSize - 1] === "") {
-			console.log("Making edge move");
 			move.position = [i, gridSize - 1];
 			return move;
 		}
@@ -218,9 +203,11 @@ const checkForEdgeMove = ({
 const makeRandomMove = ({
 	board,
 	gridSize,
+	lastMove,
 }: {
 	board: any;
 	gridSize: number;
+	lastMove: MoveType;
 }) => {
 	let move: MoveType = {
 		position: [0, 0],
