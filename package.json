@@ -1,29 +1,36 @@
 {
-  "name": "tic-tac-toe",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@reduxjs/toolkit": "^1.8.5",
-    "react": "^18.2.0",
-    "react-confetti": "^6.1.0",
-    "react-dom": "^18.2.0",
-    "react-hook-form": "^7.37.0",
-    "react-redux": "^8.0.4",
-    "redux": "^4.2.0",
-    "redux-thunk": "^2.4.1"
-  },
-  "devDependencies": {
-    "@types/react": "^18.0.17",
-    "@types/react-dom": "^18.0.6",
-    "@vitejs/plugin-react": "^2.1.0",
-    "sass": "^1.55.0",
-    "typescript": "^4.6.4",
-    "vite": "^3.1.0"
-  }
+	"name": "tic-tac-toe",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc && vite build",
+		"preview": "vite preview",
+		"test": "vitest",
+		"coverage": "vitest run --coverage"
+	},
+	"dependencies": {
+		"@reduxjs/toolkit": "^1.8.5",
+		"react": "^18.2.0",
+		"react-confetti": "^6.1.0",
+		"react-dom": "^18.2.0",
+		"react-hook-form": "^7.37.0",
+		"react-redux": "^8.0.4",
+		"redux": "^4.2.0",
+		"redux-thunk": "^2.4.1"
+	},
+	"devDependencies": {
+		"@testing-library/react": "^13.4.0",
+		"@types/react": "^18.0.17",
+		"@types/react-dom": "^18.0.6",
+		"@vitejs/plugin-react": "^2.1.0",
+		"@vitest/coverage-c8": "^0.24.1",
+		"@vitest/ui": "^0.24.1",
+		"happy-dom": "^7.4.0",
+		"sass": "^1.55.0",
+		"typescript": "^4.6.4",
+		"vite": "^3.1.0",
+		"vitest": "^0.24.1"
+	}
 }
