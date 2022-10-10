@@ -120,23 +120,35 @@ const checkForCenterMove = ({
 			return move;
 		}
 	} else {
+		const optionalMoves: any[] = [];
 		// Find center of grid when even
 		const center1 = Math.floor(gridSize / 2) - 1;
 		const center2 = Math.floor(gridSize / 2);
 		if (board[center1][center1] === "") {
-			move.position = [center1, center1];
-			return move;
-		} else if (board[center1][center2] === "") {
-			move.position = [center1, center2];
-			return move;
-		} else if (board[center2][center1] === "") {
-			move.position = [center2, center1];
-			return move;
-		} else if (board[center2][center2] === "") {
-			move.position = [center2, center2];
+			optionalMoves.push([center1, center1]);
+		}
+		if (board[center1][center2] === "") {
+			optionalMoves.push([center1, center2]);
+		}
+		if (board[center2][center1] === "") {
+			optionalMoves.push([center2, center1]);
+		}
+		if (board[center2][center2] === "") {
+			optionalMoves.push([center2, center2]);
+		}
+
+		if (optionalMoves.length > 0) {
+			const randomPosition = Math.floor(
+				Math.random() * (optionalMoves.length - 0)
+			);
+			move.position = [
+				optionalMoves[randomPosition][0],
+				optionalMoves[randomPosition][1],
+			];
 			return move;
 		}
 	}
+
 	return false;
 };
 
@@ -172,6 +184,7 @@ const checkForCornerMove = ({
 		];
 		return move;
 	}
+
 	return false;
 };
 
