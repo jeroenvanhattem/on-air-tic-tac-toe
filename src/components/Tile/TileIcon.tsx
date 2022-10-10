@@ -1,3 +1,4 @@
+import React from 'react'
 import styles from './TileIcon.module.scss'
 
 export const TileIcon = ({ content, id }: { content: string, id: string }) => {

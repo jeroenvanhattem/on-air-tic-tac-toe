@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Board } from '../Board/Board'
 import { Menu } from '../Menu/Menu'
@@ -52,6 +52,7 @@ export const StartScreen = () => {
         <button
           onClick={start}
           className={styles.StartButton}
+          data-testid="startbutton"
         >Let's start!</button>
       </div>
     </div >

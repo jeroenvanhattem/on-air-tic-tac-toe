@@ -1,3 +1,4 @@
+import React from 'react'
 import { ResetButton } from "./ResetButton"
 import { UndoButton } from "./UndoButton"
 import { ExitButton } from "./ExitButton"

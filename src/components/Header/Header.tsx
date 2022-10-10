@@ -1,3 +1,4 @@
+import React from 'react'
 import { OnAirLogo } from '../Logo/OnAirLogo'
 import { TicTacToeLogo } from '../Logo/TicTacToeLogo'
 import styles from './Header.module.scss'

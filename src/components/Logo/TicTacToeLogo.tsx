@@ -1,3 +1,4 @@
+import React from 'react'
 import styles from './TicTacToeLogo.module.scss'
 
 export const TicTacToeLogo = () => {

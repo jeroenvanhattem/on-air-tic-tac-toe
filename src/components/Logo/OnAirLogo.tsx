@@ -1,3 +1,4 @@
+import React from 'react'
 import styles from './OnAirLogo.module.scss'
 
 export const OnAirLogo = () => {

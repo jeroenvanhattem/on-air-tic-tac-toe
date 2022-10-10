@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import styles from './App.module.scss'
 import { Board } from './components/Board/Board'

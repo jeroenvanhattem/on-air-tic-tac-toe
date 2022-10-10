@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Board } from '../Board/Board'
 import { CurrentMover } from '../CurrentMover/CurrentMover'
