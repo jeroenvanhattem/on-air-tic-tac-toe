@@ -158,14 +158,20 @@ const checkForCornerMove = ({
 		[gridSize - 1, gridSize - 1],
 	];
 
-	for (let i = 0; i < corners.length; i++) {
-		const [x, y] = corners[i];
-		if (board[x][y] === "") {
-			move.position = [x, y];
-			return move;
-		}
-	}
+	const optionalMoves = corners.filter((corner) => {
+		return board[corner[0]][corner[1]] === "";
+	});
 
+	if (optionalMoves.length > 0) {
+		const randomPosition = Math.floor(
+			Math.random() * (optionalMoves.length - 0)
+		);
+		move.position = [
+			optionalMoves[randomPosition][0],
+			optionalMoves[randomPosition][1],
+		];
+		return move;
+	}
 	return false;
 };
 
@@ -180,20 +186,29 @@ const checkForEdgeMove = ({
 		position: [0, 0],
 		mover: "o",
 	};
+
+	const optionalMoves: any[] = [];
 	for (let i = 0; i < gridSize; i++) {
 		if (board[0][i] === "") {
-			move.position = [0, i];
-			return move;
+			optionalMoves.push([0, i]);
 		} else if (board[gridSize - 1][i] === "") {
-			move.position = [gridSize - 1, i];
-			return move;
+			optionalMoves.push([gridSize - 1, i]);
 		} else if (board[i][0] === "") {
-			move.position = [i, 0];
-			return move;
+			optionalMoves.push([i, 0]);
 		} else if (board[i][gridSize - 1] === "") {
-			move.position = [i, gridSize - 1];
-			return move;
+			optionalMoves.push([i, gridSize - 1]);
 		}
+	}
+
+	if (optionalMoves.length > 0) {
+		const randomPosition = Math.floor(
+			Math.random() * (optionalMoves.length - 0)
+		);
+		move.position = [
+			optionalMoves[randomPosition][0],
+			optionalMoves[randomPosition][1],
+		];
+		return move;
 	}
 
 	return false;
