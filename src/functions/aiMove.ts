@@ -17,11 +17,10 @@ export const aiMoves = ({
 	const moves = _moves;
 	moves.push(lastMove);
 
-	if (moves.length === gridSize * gridSize) {
-		return false;
-	}
+	if (moves.length === gridSize * gridSize) return false;
 
 	const board = updateBoard({ gridSize, moves: moves });
+	if (checkWin({ board: board, currentMover: "x" }) === "x") return false;
 
 	let move: MoveType | boolean = {
 		position: [0, 0],
