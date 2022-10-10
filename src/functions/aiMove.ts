@@ -12,11 +12,11 @@ export const aiMoves = ({
 	board: any;
 	moves: MoveType[];
 	gridSize: number;
-	lastMove: MoveType;
+	lastMove: MoveType | null;
 }) => {
 	const moves = _moves;
-	moves.push(lastMove);
 
+	if (lastMove) moves.push(lastMove);
 	if (moves.length === gridSize * gridSize) return false;
 
 	const board = updateBoard({ gridSize, moves: moves });
@@ -24,15 +24,19 @@ export const aiMoves = ({
 
 	let move: MoveType | boolean = {
 		position: [0, 0],
-		mover: "o",
+		mover: lastMove ? "o" : "x",
 	};
 
-	move = checkForWinningMove({ board: board, gridSize });
-	if (!move) move = checkForBlockingMove({ board: board, gridSize });
-	if (!move) move = checkForCenterMove({ board, gridSize });
-	if (!move) move = checkForCornerMove({ board, gridSize });
-	if (!move) move = checkForEdgeMove({ board, gridSize });
-	if (!move) move = makeRandomMove({ board, gridSize, lastMove });
+	// If there's no lastMove, the player has decided for the AI to make a move.
+	// So the AI will play as "x"
+	const mover = lastMove ? "o" : "x";
+
+	move = checkForWinningMove({ board: board, gridSize, mover });
+	if (!move) move = checkForBlockingMove({ board: board, gridSize, mover });
+	if (!move) move = checkForCenterMove({ board, gridSize, mover });
+	if (!move) move = checkForCornerMove({ board, gridSize, mover });
+	if (!move) move = checkForEdgeMove({ board, gridSize, mover });
+	if (!move) move = makeRandomMove({ board, gridSize, lastMove, mover });
 
 	return move;
 };
@@ -40,13 +44,15 @@ export const aiMoves = ({
 const checkForWinningMove = ({
 	board,
 	gridSize,
+	mover,
 }: {
 	board: any;
 	gridSize: number;
+	mover: string;
 }) => {
 	let move: MoveType | false = {
 		position: [0, 0],
-		mover: "o",
+		mover,
 	};
 	for (let i = 0; i < gridSize; i++) {
 		for (let j = 0; j < gridSize; j++) {
@@ -70,13 +76,15 @@ const checkForWinningMove = ({
 const checkForBlockingMove = ({
 	board,
 	gridSize,
+	mover,
 }: {
 	board: any;
 	gridSize: number;
+	mover: string;
 }) => {
 	let move: MoveType | false = {
 		position: [0, 0],
-		mover: "o",
+		mover,
 	};
 
 	// I know it's unnecessary to check for multiple blocking moves, because 99% chance that the user will make another winning move when possible.
@@ -118,13 +126,15 @@ const checkForBlockingMove = ({
 const checkForCenterMove = ({
 	board,
 	gridSize,
+	mover,
 }: {
 	board: any;
 	gridSize: number;
+	mover: string;
 }) => {
 	let move: MoveType | false = {
 		position: [0, 0],
-		mover: "o",
+		mover,
 	};
 
 	const optionalMoves: any[] = [];
@@ -171,13 +181,15 @@ const checkForCenterMove = ({
 const checkForCornerMove = ({
 	board,
 	gridSize,
+	mover,
 }: {
 	board: any;
 	gridSize: number;
+	mover: string;
 }) => {
 	let move: MoveType | false = {
 		position: [0, 0],
-		mover: "o",
+		mover,
 	};
 	const corners = [
 		[0, 0],
@@ -207,13 +219,15 @@ const checkForCornerMove = ({
 const checkForEdgeMove = ({
 	board,
 	gridSize,
+	mover,
 }: {
 	board: any;
 	gridSize: number;
+	mover: string;
 }) => {
 	let move: MoveType | false = {
 		position: [0, 0],
-		mover: "o",
+		mover,
 	};
 
 	const optionalMoves: any[] = [];
@@ -247,23 +261,27 @@ const checkForEdgeMove = ({
 const makeRandomMove = ({
 	board,
 	gridSize,
+	mover,
 	lastMove,
 }: {
 	board: any;
 	gridSize: number;
-	lastMove: MoveType;
+	mover: string;
+	lastMove: MoveType | null;
 }) => {
 	let move: MoveType = {
 		position: [0, 0],
-		mover: "o",
+		mover,
 	};
 	let moveMade = false;
 	while (!moveMade) {
 		let row = Math.floor(Math.random() * gridSize);
 		let column = Math.floor(Math.random() * gridSize);
-		while (row === lastMove.position[0] && column === lastMove.position[1]) {
-			row = Math.floor(Math.random() * gridSize);
-			column = Math.floor(Math.random() * gridSize);
+		if (lastMove) {
+			while (row === lastMove.position[0] && column === lastMove.position[1]) {
+				row = Math.floor(Math.random() * gridSize);
+				column = Math.floor(Math.random() * gridSize);
+			}
 		}
 		if (board[row][column] === "") {
 			move.position = [row, column];

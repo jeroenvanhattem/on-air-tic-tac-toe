@@ -47,10 +47,16 @@ export const Board = () => {
     }
   }
 
-  const aiMakeMove = ({ lastMove }: { lastMove: MoveType }) => {
+  const letAIMakeUserMove = () => {
+    const madeMove = aiMakeMove({ lastMove: null })
+    if (madeMove) aiMakeMove({ lastMove: madeMove })
+  }
+
+  const aiMakeMove = ({ lastMove }: { lastMove: MoveType | null }) => {
     const move = aiMoves({ board, moves, gridSize, lastMove })
     if (move) {
       dispatch({ type: 'ADD_MOVE', payload: move })
+      return move
     }
   }
 
@@ -67,29 +73,33 @@ export const Board = () => {
   }, [moves])
 
   return (
-    <div className={styles.Board} data-testid="board">
-      {board && [...Array(gridSize)].map((_, i) => {
-        return (
-          <div className={styles.Row} key={`${i}`}>
-            {
-              [...Array(gridSize)].map((_, j) => {
-                return (
-                  <div
-                    className={styles.Cell}
-                    onClick={() => { makeMove([i, j]) }}
-                    key={`cell-${i}-${j}`}
-                    data-testid={`cell-${i}-${j}`}
-                  >
-                    {board[i][j] !== '' ?
-                      <TileIcon content={board[i][j]} id={`tile-${i}-${j}`} /> : ''}
-                  </div>
-                )
-              })
-            }
-          </div >
-        )
-      })
-      }
-    </div >
+    <div className={styles.Container}>
+      <div className={styles.Board} data-testid="board">
+        {
+          board && [...Array(gridSize)].map((_, i) => {
+            return (
+              <div className={styles.Row} key={`${i}`}>
+                {
+                  [...Array(gridSize)].map((_, j) => {
+                    return (
+                      <div
+                        className={styles.Cell}
+                        onClick={() => { makeMove([i, j]) }}
+                        key={`cell-${i}-${j}`}
+                        data-testid={`cell-${i}-${j}`}
+                      >
+                        {board[i][j] !== '' ?
+                          <TileIcon content={board[i][j]} id={`tile-${i}-${j}`} /> : ''}
+                      </div>
+                    )
+                  })
+                }
+              </div >
+            )
+          })
+        }
+      </div >
+      <button className={styles.aiMoveButton} onClick={letAIMakeUserMove} >AI, help me!</button>
+    </div>
   )
 }
