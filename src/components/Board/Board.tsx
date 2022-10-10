@@ -48,12 +48,15 @@ export const Board = () => {
   }
 
   const letAIMakeUserMove = () => {
-    const madeMove = aiMakeMove({ lastMove: null })
-    if (madeMove) aiMakeMove({ lastMove: madeMove })
+    const madeMove = aiMakeMove({ lastMove: null, player: currentMover })
+    if (!cpu) {
+      dispatch({ type: 'SET_CURRENT_MOVER', payload: currentMover === 'x' ? 'o' : 'x' })
+    }
+    else if (madeMove) aiMakeMove({ lastMove: madeMove })
   }
 
-  const aiMakeMove = ({ lastMove }: { lastMove: MoveType | null }) => {
-    const move = aiMoves({ board, moves, gridSize, lastMove })
+  const aiMakeMove = ({ lastMove, player }: { lastMove: MoveType | null, player?: string }) => {
+    const move = aiMoves({ board, moves, gridSize, lastMove, player })
     if (move) {
       dispatch({ type: 'ADD_MOVE', payload: move })
       return move

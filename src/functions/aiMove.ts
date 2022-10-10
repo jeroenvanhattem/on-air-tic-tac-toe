@@ -8,11 +8,13 @@ export const aiMoves = ({
 	moves: _moves,
 	gridSize,
 	lastMove,
+	player,
 }: {
 	board: any;
 	moves: MoveType[];
 	gridSize: number;
 	lastMove: MoveType | null;
+	player?: string;
 }) => {
 	const moves = _moves;
 
@@ -29,7 +31,7 @@ export const aiMoves = ({
 
 	// If there's no lastMove, the player has decided for the AI to make a move.
 	// So the AI will play as "x"
-	const mover = lastMove ? "o" : "x";
+	const mover = player ? player : lastMove ? "o" : "x";
 
 	move = checkForWinningMove({ board: board, gridSize, mover });
 	if (!move) move = checkForBlockingMove({ board: board, gridSize, mover });
