@@ -9,7 +9,7 @@ If you use npm, run `npm -i` followed by `npm run dev`.
 
 - The project runs on Vite.
 - The design is responsive.
-- The game has various grid sized. I capped it at 5 to keep the UI usable, but the code knows no limit.
+- The game has various grid sizes. I capped it at 5 to keep the UI usable, but the code knows no limit.
 - There is an AI, so you can play Tic Tac Toe on your own.
 - There is some basic testing which ensures that the game itself works.
 
