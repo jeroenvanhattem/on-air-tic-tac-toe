@@ -4,7 +4,6 @@ import { aiMoves } from "../../functions/aiMove"
 import { checkWin } from "../../functions/checkWin"
 import { generateBoard } from "../../functions/generateBoard"
 import { updateBoard } from "../../functions/updateBoard"
-import { BoardType } from "../../types/Board"
 import { MoveType } from "../../types/Game"
 import { TileIcon } from "../Tile/TileIcon"
 import styles from "./Board.module.scss"
@@ -69,7 +68,7 @@ export const Board = () => {
   }, [])
 
   useEffect(() => {
-    // Execute the moves on the board using a command pattern.
+    // Execute the moves on the board using a command pattern. This is so we can undo moves.
     const newBoard = updateBoard({ moves, gridSize })
     setBoard(newBoard)
     afterMove({ board: newBoard })
