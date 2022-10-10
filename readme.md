@@ -13,4 +13,6 @@ If you use npm, run `npm -i` followed by `npm run dev`.
 - There is an AI, so you can play Tic Tac Toe on your own.
 - There is some basic testing which ensures that the game itself works.
 
+### Good luck!
+
 Wanna play without running it locally? [Click here to go to the latest version](https://on-air-tic-tac-toe.vercel.app/)
